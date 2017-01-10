@@ -340,10 +340,10 @@ handle_1_0_frame0(Mode, Channel, Payload, State) ->
     end.
 
 parse_1_0_frame(Payload, _Channel) ->
-    {PerfDesc, Rest} = rabbit_amqp1_0_binary_parser:parse(Payload),
-    Perf = rabbit_amqp1_0_framing:decode(PerfDesc),
+    {PerfDesc, Rest} = amqp10_binary_parser:parse(Payload),
+    Perf = amqp10_framing:decode(PerfDesc),
     ?DEBUG("Channel ~p ->~n~p~n~s~n",
-           [_Channel, rabbit_amqp1_0_framing:pprint(Perf),
+           [_Channel, amqp10_framing:pprint(Perf),
             case Rest of
                 <<>> -> <<>>;
                 _    -> rabbit_misc:format(
@@ -385,7 +385,7 @@ handle_1_0_connection_frame(#'v1_0.open'{ max_frame_size = ClientFrameMax,
                 SendFun =
                     fun() ->
                             Frame =
-                                rabbit_amqp1_0_binary_generator:build_heartbeat_frame(),
+                                amqp10_binary_generator:build_heartbeat_frame(),
                             catch rabbit_net:send(Sock, Frame)
                     end,
 

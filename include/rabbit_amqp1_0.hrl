@@ -28,10 +28,7 @@
 
 %% Encoding
 
--define(DESCRIBED, 0:8).
--define(DESCRIBED_BIN, <<?DESCRIBED>>).
-
--include_lib("rabbit_amqp1_0_framing.hrl").
+-include_lib("amqp10_common/include/amqp10_framing.hrl").
 
 -define(INFO_ITEMS, [pid,
                      auth_mechanism,
